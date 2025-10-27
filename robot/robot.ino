@@ -7,6 +7,16 @@
 #define SERVO_R_P1 6
 #define SERVO_R_P2 5
 
+uint8_t data[250];
+
+void recieve_data(uint8_t* mac, uint8_t* incoming_data, uint8_t data_len){
+  memcpy(&data, incoming_data, data_len)
+  for(int i = 0; i < data_len; i++){
+    Serial.println("New Recieved Data: ")
+    Serial.println(myData[i]);
+  }
+}
+
 void setup() {
   Serial.begin(115200);
   // pinMode(SONAR_TRIG_P, OUTPUT);
@@ -18,7 +28,13 @@ void setup() {
   pinMode(SERVO_L_P1, OUTPUT); 
   pinMode(SERVO_L_P2, OUTPUT); 
   pinMode(SERVO_R_P1, OUTPUT); 
-  pinMode(SERVO_R_P2, OUTPUT); 
+  pinMode(SERVO_R_P2, OUTPUT);
+
+  WiFi.mode(WIFI_STA);
+
+  esp_now_register_recv_cb(
+    esp_now_recv_cb_t(recieve_data)
+  );
 }
 
 // long sonarDuration;   
