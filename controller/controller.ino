@@ -10,17 +10,17 @@
 #define ACTION_2 47
 
 // robot mac address here
-uint8_t robot_mac[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+uint8_t robot_mac[] = {0x80, 0xb5, 0x4e, 0xe3, 0x1d, 0x54};
 esp_now_peer_info_t peer_connection;
 
 // custom data package object to send to robot
 typedef struct{
-  bool forward: 1;
-  bool backward: 1;
-  bool turn_left: 1;
-  bool turn_right: 1;
-  bool action_1: 1;
-  bool action_2: 1;
+  bool forward;
+  bool backward;
+  bool turn_left;
+  bool turn_right;
+  bool action_1;
+  bool action_2;
 } data_package;
 
 // creating data packages
@@ -38,6 +38,7 @@ void setup(){
   pinMode(ACTION_2, INPUT_PULLUP);
 
   WiFi.mode(WIFI_MODE_STA);
+  esp_now_init();
 
   // initializing peer connection and assigning robot mac
   memcpy(peer_connection.peer_addr, robot_mac, 6);
@@ -70,9 +71,9 @@ void loop(){
       Serial.println("Data sent successfully");
     }
     else{
-      Serial.prinln("An error occured while sending");
+      Serial.println(response);
     }
   }
 
-  delay(40);
+  delay(50);
 }

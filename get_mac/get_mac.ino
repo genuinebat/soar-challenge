@@ -2,6 +2,7 @@
 
 void setup(){
   Serial.begin(115200);
+  Serial.println("Starting Initilization");
 
   uint8_t mac_addr[6];
   esp_err_t response = esp_base_mac_addr_get(mac_addr);
@@ -15,5 +16,5 @@ void setup(){
 }
 
 void loop(){
-  delay(100)
+  delay(100);
 }
